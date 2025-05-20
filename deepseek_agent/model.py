@@ -2,6 +2,9 @@ import requests
 import json
 from typing import Optional, Dict, List, Generator
 
+'''
+ollama参考api地址: https://github.com/ollama/ollama/blob/main/docs/api.md
+'''
 
 class DeepSeekChatModel:
     def __init__(
