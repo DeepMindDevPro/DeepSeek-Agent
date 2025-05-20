@@ -43,6 +43,8 @@ class WebSearch(BaseTool):
                 'DEEPSEEK_SEARCH_API_KEY is None! Please set it as an environment variable.')
         headers = {'Content-Type': 'application/json', 'X-API-KEY': DEEPSEEK_SEARCH_API_KEY}
         payload = {'q': query}
+        print(headers)
+        print(query)
         response = requests.post(DEEPSEEK_SEARCH_URL, json=payload, headers=headers)
         response.raise_for_status()
 
