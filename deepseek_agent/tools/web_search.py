@@ -1,12 +1,19 @@
 # deepseek_agent/tools/web_search.py
 import os
 from typing import Union
+from dotenv import load_dotenv
 
 import requests
 from deepseek_agent.tools.base import BaseTool
 
-DEEPSEEK_SEARCH_API_KEY = os.getenv('DEEPSEEK_SEARCH_API_KEY', '')
-DEEPSEEK_SEARCH_URL = os.getenv('DEEPSEEK_SEARCH_URL', 'https://platform.deepseek.com/api/search')
+# 加载.env文件
+load_dotenv()
+
+DEEPSEEK_SEARCH_API_KEY = os.getenv('DEEPSEEK_API_KEY', '')
+DEEPSEEK_SEARCH_URL = os.getenv('DEEPSEEK_SEARCH_URL', 'https://api.deepseek.com/chat/completions')
+
+print(DEEPSEEK_SEARCH_API_KEY)
+print(DEEPSEEK_SEARCH_URL)
 
 class WebSearch(BaseTool):
     name = 'web_search'

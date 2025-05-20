@@ -1,12 +1,17 @@
 # examples/example.py
 import os
+from dotenv import load_dotenv
 from deepseek_agent.model import DeepSeekChatModel
 from deepseek_agent.assistant import DeepSeekAssistant
 from deepseek_agent.tools.web_search import WebSearch
 
+# 加载.env文件
+load_dotenv()
+
 # 初始化DeepSeek模型
 api_key = os.getenv('DEEPSEEK_API_KEY')
-model_name = 'deepseek-model-name'
+print(api_key)
+model_name = 'deepseek-chat'
 llm = DeepSeekChatModel(api_key, model_name)
 
 # 初始化Agent

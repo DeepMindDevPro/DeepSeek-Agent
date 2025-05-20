@@ -2,7 +2,7 @@
 import requests
 
 class DeepSeekChatModel:
-    def __init__(self, api_key, model_name, api_url="https://platform.deepseek.com/api/chat"):
+    def __init__(self, api_key, model_name, api_url="https://api.deepseek.com/chat/completions"):
         self.api_key = api_key
         self.model_name = model_name
         self.api_url = api_url

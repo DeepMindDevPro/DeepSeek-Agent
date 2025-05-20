@@ -1,0 +1,33 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="20">
+            <item index="0" class="java.lang.String" itemvalue="pydantic" />
+            <item index="1" class="java.lang.String" itemvalue="gymnasium" />
+            <item index="2" class="java.lang.String" itemvalue="googlesearch-python" />
+            <item index="3" class="java.lang.String" itemvalue="aiofiles" />
+            <item index="4" class="java.lang.String" itemvalue="html2text" />
+            <item index="5" class="java.lang.String" itemvalue="numpy" />
+            <item index="6" class="java.lang.String" itemvalue="datasets" />
+            <item index="7" class="java.lang.String" itemvalue="loguru" />
+            <item index="8" class="java.lang.String" itemvalue="pyyaml" />
+            <item index="9" class="java.lang.String" itemvalue="openai" />
+            <item index="10" class="java.lang.String" itemvalue="unidiff" />
+            <item index="11" class="java.lang.String" itemvalue="fastapi" />
+            <item index="12" class="java.lang.String" itemvalue="browsergym" />
+            <item index="13" class="java.lang.String" itemvalue="pydantic_core" />
+            <item index="14" class="java.lang.String" itemvalue="playwright" />
+            <item index="15" class="java.lang.String" itemvalue="colorama" />
+            <item index="16" class="java.lang.String" itemvalue="tenacity" />
+            <item index="17" class="java.lang.String" itemvalue="pillow" />
+            <item index="18" class="java.lang.String" itemvalue="browser-use" />
+            <item index="19" class="java.lang.String" itemvalue="uvicorn" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
