@@ -1,17 +1,30 @@
-import chromadb
-from chromadb.config import Settings
+import os
+from pymilvus import connections, Collection
 from sentence_transformers import SentenceTransformer
 from deepseek_agent.tools.base import BaseTool
 from typing import Union
 
-# 初始化 Chroma 客户端
-client = chromadb.Client(Settings(
-    chroma_db_impl="duckdb+parquet",
-    persist_directory=".chromadb"
-))
+# 连接到 Milvus
+connections.connect(
+    alias="default",
+    host=os.getenv('MILVUS_HOST', 'localhost'),
+    port=os.getenv('MILVUS_PORT', '19530')
+)
 
-# 创建一个集合
-collection = client.create_collection(name="my_collection")
+# 创建或加载 Milvus 集合
+collection_name = "my_collection"
+dim = 384  # all-MiniLM-L6-v2 模型的向量维度
+fields = [
+    {"name": "id", "type": "VARCHAR", "params": {"max_length": 64}, "is_primary": True},
+    {"name": "embedding", "type": "FLOAT_VECTOR", "params": {"dim": dim}},
+    {"name": "document", "type": "VARCHAR", "params": {"max_length": 2048}}
+]
+schema = {
+    "name": collection_name,
+    "fields": fields
+}
+collection = Collection(name=collection_name, schema=schema)
+collection.load()
 
 # 加载预训练的嵌入模型
 model = SentenceTransformer('all-MiniLM-L6-v2')
@@ -19,21 +32,30 @@ model = SentenceTransformer('all-MiniLM-L6-v2')
 def add_document(text):
     """向数据存储模块添加文档"""
     embedding = model.encode(text).tolist()
-    collection.add(
-        documents=[text],
-        embeddings=[embedding],
-        ids=[str(len(collection.get()['ids']))]
-    )
-    client.persist()
+    id = str(len(collection.query(expr="id >= '0'")))
+    data = [
+        [id],
+        [embedding],
+        [text]
+    ]
+    collection.insert(data)
+    collection.flush()
 
 def retrieve_documents(query, top_k=3):
     """从数据存储模块中检索与查询相关的文档"""
     query_embedding = model.encode(query).tolist()
-    results = collection.query(
-        query_embeddings=[query_embedding],
-        n_results=top_k
+    search_params = {
+        "metric_type": "L2",
+        "params": {"nprobe": 10}
+    }
+    results = collection.search(
+        data=[query_embedding],
+        anns_field="embedding",
+        param=search_params,
+        limit=top_k,
+        output_fields=["document"]
     )
-    return results['documents'][0]
+    return [hit.entity.get("document") for hit in results[0]]
 
 class RAGTool(BaseTool):
     name = 'rag_tool'
