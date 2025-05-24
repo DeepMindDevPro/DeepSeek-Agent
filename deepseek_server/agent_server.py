@@ -1,15 +1,15 @@
-# agent server
-# 示例：在DeepSeek-Agent项目中创建一个Flask API服务
 from flask import Flask, request, jsonify
 from deepseek_agent.model import DeepSeekChatModel
 from deepseek_agent.assistant import DeepSeekAssistant
 import os
 from dotenv import load_dotenv
+from flask_cors import CORS
 
 # 加载.env文件
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)  # 解决跨域问题
 
 # 初始化DeepSeek模型
 api_key = os.getenv('DEEPSEEK_API_KEY')
