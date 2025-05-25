@@ -19,6 +19,9 @@ from deepseek_agent.agent import Agent
 
 class DeepSeekAssistant(Agent):
     def __init__(self, function_list=None, llm=None, system_message=None):
+        # 在系统消息中添加输出思维链的要求
+        # if system_message:
+        #     system_message += " 请在回答中展示你的思维链。"
         super().__init__(function_list, llm, system_message)
         self.history_messages = []  # 用于存储历史消息
 

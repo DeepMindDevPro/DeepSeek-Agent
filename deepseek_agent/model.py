@@ -56,7 +56,8 @@ class DeepSeekChatModel:
             # 确保messages中的system提示为英文（覆盖传入的中文提示）
             # 此处强制设置为英文提示，若需要灵活控制，可移除该逻辑并由调用方传入正确格式
             request_data["messages"] = [
-                {"role": "system", "content": "你是一个中国历史、政治、文化、经济各方面的专家"},
+                # {"role": "system", "content": "你是一个中国历史、政治、文化、经济各方面的专家"},
+                {"role": "system", "content": "你是一个知识渊博的助手."},
                 *[msg for msg in messages if msg["role"] != "system"]  # 移除传入的system提示（如有）
             ]
 
