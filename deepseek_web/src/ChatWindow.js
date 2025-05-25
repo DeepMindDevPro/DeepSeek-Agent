@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import ReactMarkdown from 'react-markdown';
 
 const ChatWindow = () => {
     const [messages, setMessages] = useState([]);
@@ -32,37 +33,27 @@ const ChatWindow = () => {
         <div className="flex flex-col h-screen bg-gray-100">
             <div className="flex-grow overflow-y-auto p-4">
                 {messages.map((message, index) => {
+                    let containerClass;
+                    let title;
                     if (message.role === 'think') {
-                        return (
-                            <div
-                                key={index}
-                                className="mb-2 p-3 rounded-md bg-yellow-100 self-start"
-                            >
-                                <div className="text-xs text-gray-600">思维链内容</div>
-                                <div>{message.content}</div>
-                            </div>
-                        );
+                        containerClass = 'border-yellow-500 bg-yellow-100';
+                        title = '思维链内容';
                     } else if (message.role === 'assistant') {
-                        return (
-                            <div
-                                key={index}
-                                className="mb-2 p-3 rounded-md bg-gray-200 self-start"
-                            >
-                                <div className="text-xs text-gray-600">实际答案内容</div>
-                                <div>{message.content}</div>
-                            </div>
-                        );
+                        containerClass = 'border-green-500 bg-green-100';
+                        title = '实际答案内容';
                     } else if (message.role === 'user') {
-                        return (
-                            <div
-                                key={index}
-                                className="mb-2 p-3 rounded-md bg-blue-100 self-end"
-                            >
-                                <div className="text-xs text-gray-600">用户提问信息</div>
-                                <div>{message.content}</div>
-                            </div>
-                        );
+                        containerClass = 'border-blue-500 bg-blue-100';
+                        title = '用户提问信息';
                     }
+                    return (
+                        <div
+                            key={index}
+                            className={`mb-4 p-3 rounded-md border-2 ${containerClass} self-start w-full`}
+                        >
+                            <div className="text-xs text-gray-600 mb-1">{title}</div>
+                            <ReactMarkdown>{message.content}</ReactMarkdown>
+                        </div>
+                    );
                 })}
             </div>
             <div className="flex p-4 border-t border-gray-300">
