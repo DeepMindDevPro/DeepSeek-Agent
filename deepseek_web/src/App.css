@@ -47,3 +47,8 @@
   margin-top: 8px;
 }
 */
+
+.bottom-input-container {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
