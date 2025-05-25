@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+
+/* 在ChatWindow.css或App.css中添加
+.message-image {
+  max-width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+  border-radius: 12px;
+  margin-top: 8px;
+}
+*/
