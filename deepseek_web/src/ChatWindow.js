@@ -52,13 +52,14 @@ const ChatWindow = () => {
                                 <div>{message.content}</div>
                             </div>
                         );
-                    } else {
+                    } else if (message.role === 'user') {
                         return (
                             <div
                                 key={index}
                                 className="mb-2 p-3 rounded-md bg-blue-100 self-end"
                             >
-                                {message.content}
+                                <div className="text-xs text-gray-600">用户提问信息</div>
+                                <div>{message.content}</div>
                             </div>
                         );
                     }
