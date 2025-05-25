@@ -18,9 +18,9 @@ const ChatWindow = () => {
                 const thinkContent = res.choices[0].think_content;
                 if (thinkContent) {
                     const thinkMessage = { role: 'think', content: thinkContent };
-                    setMessages(prevMessages => [...prevMessages, thinkMessage, botMessage]); // 不再重复添加用户消息
+                    setMessages(prevMessages => [...prevMessages, thinkMessage, botMessage]);
                 } else {
-                    setMessages(prevMessages => [...prevMessages, botMessage]); // 不再重复添加用户消息
+                    setMessages(prevMessages => [...prevMessages, botMessage]);
                 }
             });
         } catch (error) {
@@ -31,17 +31,38 @@ const ChatWindow = () => {
     return (
         <div className="flex flex-col h-screen bg-gray-100">
             <div className="flex-grow overflow-y-auto p-4">
-                {messages.map((message, index) => (
-                    <div
-                        key={index}
-                        className={`mb-2 p-3 rounded-md ${
-                            message.role === 'user' ? 'bg-blue-100 self-end' :
-                            message.role === 'think' ? 'bg-yellow-100 self-start' : 'bg-gray-200 self-start'
-                        }`}
-                    >
-                        {message.content}
-                    </div>
-                ))}
+                {messages.map((message, index) => {
+                    if (message.role === 'think') {
+                        return (
+                            <div
+                                key={index}
+                                className="mb-2 p-3 rounded-md bg-yellow-100 self-start"
+                            >
+                                <div className="text-xs text-gray-600">思维链内容</div>
+                                <div>{message.content}</div>
+                            </div>
+                        );
+                    } else if (message.role === 'assistant') {
+                        return (
+                            <div
+                                key={index}
+                                className="mb-2 p-3 rounded-md bg-gray-200 self-start"
+                            >
+                                <div className="text-xs text-gray-600">实际答案内容</div>
+                                <div>{message.content}</div>
+                            </div>
+                        );
+                    } else {
+                        return (
+                            <div
+                                key={index}
+                                className="mb-2 p-3 rounded-md bg-blue-100 self-end"
+                            >
+                                {message.content}
+                            </div>
+                        );
+                    }
+                })}
             </div>
             <div className="flex p-4 border-t border-gray-300">
                 <input
