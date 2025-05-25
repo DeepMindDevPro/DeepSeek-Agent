@@ -13,8 +13,16 @@ const ChatWindow = () => {
 
         try {
             const response = await axios.post('http://localhost:5000/api/chat', { messages: [newMessage] });
-            const botMessage = { role: 'assistant', content: response.data[0].choices[0].message.content };
-            setMessages([...messages, newMessage, botMessage]);
+            response.data.forEach(res => {
+                const botMessage = { role: 'assistant', content: res.choices[0].message.content };
+                const thinkContent = res.choices[0].think_content;
+                if (thinkContent) {
+                    const thinkMessage = { role: 'think', content: thinkContent };
+                    setMessages(prevMessages => [...prevMessages, thinkMessage, botMessage]); // 不再重复添加用户消息
+                } else {
+                    setMessages(prevMessages => [...prevMessages, botMessage]); // 不再重复添加用户消息
+                }
+            });
         } catch (error) {
             console.error('Error sending message:', error);
         }
@@ -27,7 +35,8 @@ const ChatWindow = () => {
                     <div
                         key={index}
                         className={`mb-2 p-3 rounded-md ${
-                            message.role === 'user' ? 'bg-blue-100 self-end' : 'bg-gray-200 self-start'
+                            message.role === 'user' ? 'bg-blue-100 self-end' :
+                            message.role === 'think' ? 'bg-yellow-100 self-start' : 'bg-gray-200 self-start'
                         }`}
                     >
                         {message.content}
@@ -46,7 +55,7 @@ const ChatWindow = () => {
                     onClick={handleSendMessage}
                     className="px-4 py-2 bg-blue-500 text-white rounded-md"
                 >
-                    发送
+                    发送你的消息
                 </button>
             </div>
         </div>
