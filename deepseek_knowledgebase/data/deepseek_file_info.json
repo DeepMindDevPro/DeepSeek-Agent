@@ -1,0 +1,22 @@
+[
+    {
+        "instruction": "curl调用对话API",
+        "input": "",
+        "output": "curl https://api.deepseek.com/chat/completions \\\n  -H \"Content-Type: application/json\" \\\n  -H \"Authorization: Bearer <DeepSeek API Key>\" \\\n  -d '{\n        \"model\": \"deepseek-chat\",\n        \"messages\": [\n          {\"role\": \"system\", \"content\": \"You are a helpful assistant.\"},\n          {\"role\": \"user\", \"content\": \"Hello!\"}\n        ],\n        \"stream\": false\n      }'"
+    },
+    {
+        "instruction": "curl调用对话API",
+        "input": "",
+        "output": "# Please install OpenAI SDK first: `pip3 install openai`\n\nfrom openai import OpenAI\n\nclient = OpenAI(api_key=\"<DeepSeek API Key>\", base_url=\"https://api.deepseek.com\")\n\nresponse = client.chat.completions.create(\n    model=\"deepseek-chat\",\n    messages=[\n        {\"role\": \"system\", \"content\": \"You are a helpful assistant\"},\n        {\"role\": \"user\", \"content\": \"Hello\"},\n    ],\n    stream=False\n)\n\nprint(response.choices[0].message.content)"
+    },
+    {
+        "instruction": "nodejs调用对话API",
+        "input": "",
+        "output": "// Please install OpenAI SDK first: `npm install openai`\n\nimport OpenAI from \"openai\";\n\nconst openai = new OpenAI({\n        baseURL: 'https://api.deepseek.com',\n        apiKey: '<DeepSeek API Key>'\n});\n\nasync function main() {\n  const completion = await openai.chat.completions.create({\n    messages: [{ role: \"system\", content: \"You are a helpful assistant.\" }],\n    model: \"deepseek-chat\",\n  });\n\n  console.log(completion.choices[0].message.content);\n}\n\nmain();"
+    },
+    {
+        "instruction": "",
+        "input": "",
+        "output": ""
+    }
+]
