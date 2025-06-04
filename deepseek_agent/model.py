@@ -33,6 +33,8 @@ class DeepSeekChatModel:
             stream: bool = False,
             extra_generate_cfg: Optional[Dict] = None,
     ) -> Generator[dict, None, None]:
+        # TODO
+        # 根据任务类型选择模型（示例: 复杂任务用大模型，简单任务用轻量模型）
         headers = {}
         request_data = {"model": self.model_name, "messages": messages, "stream": False}  # 强制设置stream=False
 
