@@ -16,7 +16,17 @@ class Agent(ABC):
 
     @abstractmethod
     def _run(self, messages: List[Dict], lang: str = 'en', **kwargs) -> Iterator[List[Dict]]:
-        raise NotImplementedError
+        # 动态工具注册：在 Agent 基类中支持动态加载工具列表，使代理能根据任务自动选择工具
+        # raise NotImplementedError
+        # 自动判断是否需要调用工具（示例逻辑）
+        if self.function_list and "需要搜索" in messages[-1]["content"]:
+            tool = self.function_list[0]()  # 实例化工具
+            tool_result = tool.call({"query": messages[-1]["content"]})
+            messages.append({"role": "tool", "content": tool_result})
+        # 调用 LLM 生成最终响应
+        response = self.llm.chat(messages)
+        for chunk in response:
+            yield [chunk]
 
 
 #定义专用 Agent 类：继承 Agent 基类（agent.py), 为不同任务场景实现专用代理
