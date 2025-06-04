@@ -27,10 +27,11 @@ class CoderAgent(Agent):
         for chunk in response:
             yield [chunk]
 
+# 浏览器助手
 class BrowserAgent(Agent):
     def _run(self, messages: List[Dict], lang: str = 'en', **kwargs) -> Iterator[List[Dict]]:
-        # 集成浏览器操作工具（如 Selenium/Playwright）
-        from deepseek_agent.tools.web_browser import WebBrowserTool
-        browser_tool = WebBrowserTool()
+        # 集成浏览器操作工具（如Selenium/Playwright）
+        from deepseek_agent.tools.web_search import WebSearch
+        browser_tool = WebSearch()
         result = browser_tool.call({"query": messages[-1]["content"]})
         yield [{"role": "assistant", "content": result}]

@@ -6,6 +6,9 @@ from dotenv import load_dotenv
 import requests
 from deepseek_agent.tools.base import BaseTool
 
+
+#集成浏览器操作工具（如Selenium/Playwright）
+
 # 加载.env文件
 load_dotenv()
 
