@@ -16,7 +16,9 @@ from deepseek_agent.agent import Agent
 from typing import List, Iterator, Dict
 
 from deepseek_agent.agent import Agent
+from deepseek_agent.tools.rag_tool import retrieve_documents  # 复用 RAG 的检索功能
 
+#可以将数据写到向量数据库
 class DeepSeekAssistant(Agent):
     def __init__(self, function_list=None, llm=None, system_message=None):
         # 在系统消息中添加输出思维链的要求
