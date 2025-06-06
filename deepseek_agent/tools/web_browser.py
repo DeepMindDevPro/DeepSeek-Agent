@@ -26,3 +26,6 @@ class WebBrowserTool(BaseTool):
             content = page.query_selector("body").inner_text()
             browser.close()
             return f"页面内容摘要：{content[:500]}..."
+
+
+# 集成浏览器
